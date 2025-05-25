@@ -1,5 +1,4 @@
 import { Injectable, } from '@nestjs/common';
-import { ENV_KEY } from '@src/config/config.type';
 import { AppConfigService } from '@src/config/config.service';
 import { CacheModuleOptions, CacheOptionsFactory } from '@nestjs/cache-manager';
 
