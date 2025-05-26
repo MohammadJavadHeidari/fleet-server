@@ -23,7 +23,7 @@ import { AppConfigService } from './config.service';
         // [ENV_KEY.CACHE_TTL]: Joi.number().default(60 * 60 * 1000),
         // [ENV_KEY.CACHE_MAX]: Joi.number().default(100),
 
-        // [ENV_KEY.JWT_TOKEN_SECRET]: Joi.string().required(),
+        [ENV_KEY.JWT_TOKEN_SECRET]: Joi.string().required(),
       }),
     }),
   ],

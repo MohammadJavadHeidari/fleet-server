@@ -7,6 +7,7 @@ async function bootstrap() {
 
   const appService = app.get<AppService>(AppService);
 
+  appService.setCors(app);
   appService.setHelmet(app);
   appService.setCompression(app);
   appService.setCookieParser(app);

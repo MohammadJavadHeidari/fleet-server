@@ -25,16 +25,9 @@ import { Reflector } from '@nestjs/core';
 export class AppService {
   // constructor(private readonly appConfigService: AppConfigService) {}
 
-  // setCors(app: INestApplication): void {
-  //   // if (!this.appConfigService.isProduction()) {
-  //   //   return;
-  //   // }
-
-  //   app.enableCors({
-  //     origin: '*',
-  //     credentials: true,
-  //   });
-  // }
+  setCors(app: INestApplication): void {
+    app.enableCors();
+  }
 
   setHelmet(app: INestApplication): void {
     app.use(helmet());
@@ -105,12 +98,6 @@ export class AppService {
     });
   }
 
-  setEnableVersioning(app: INestApplication): void {
-    app.enableVersioning({
-      type: VersioningType.URI,
-    });
-  }
-
   // async setEnableShutdownHooks(app: INestApplication): Promise<void> {
   //   const appConfigService = app.get<AppConfigService>(AppConfigService);
 
@@ -138,7 +125,6 @@ export class AppService {
   // }
 
   async startingServer(app: INestApplication): Promise<void> {
-    // const PORT = this.appConfigService.get<number>(ENV_KEY.PORT);
     await app.listen(3000);
 
     console.info(`server listening on ${await app.getUrl()}`);
