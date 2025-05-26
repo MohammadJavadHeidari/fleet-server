@@ -8,21 +8,47 @@ import { SignupAuthDto } from './dto/signup-auth.dto';
 import { SigninAuthDto } from './dto/signin-auth.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { ClsService } from '@src/common/cls/cls.service';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     @InjectModel(UserSchemaClass.name)
     private readonly userModel: Model<UserSchemaClass>,
     private readonly jwtService: JwtService,
-  ) { }
+    private readonly cls: ClsService,
+  ) {}
 
+  async me() {
+    try {
+      const userId = this.cls.get('user.id');
+
+      // Check if user already exists
+      const existingUser = await this.userModel.findById(userId).lean();
+      if (!existingUser) {
+        throw new BadRequestException('User not found');
+      }
+
+      const { password, ...userResponse } = existingUser;
+
+      return {
+        success: true,
+        message: 'User fetched successfully',
+        data: userResponse,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message || 'Error fetching user',
+        data: {},
+      };
+    }
+  }
 
   async signin(signinAuthDto: SigninAuthDto) {
     try {
       // Find user by email
-      const user = await this.userModel.findOne({ email: signinAuthDto.email }).lean()
+      const user = await this.userModel.findOne({ email: signinAuthDto.email }).lean();
       if (!user) {
         throw new UnauthorizedException('Invalid email or password');
       }
@@ -42,13 +68,13 @@ export class AuthService {
       return {
         success: true,
         message: 'User signed in successfully',
-        data: { accessToken, email, firstName, lastName }
+        data: { accessToken, email, firstName, lastName },
       };
     } catch (error) {
       return {
         success: false,
         message: error.message || 'Error signing in',
-        data: {}
+        data: {},
       };
     }
   }
