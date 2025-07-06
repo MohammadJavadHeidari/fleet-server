@@ -1,8 +1,9 @@
+
 import { Driver } from '../domain/driver';
-import { DriverSchemaClass } from '../entities/driver.schema';
+import { DriverWithVirtuals } from '../entities/driver.schema';
 
 export class DriverMapper {
-  static toDomain(raw: DriverSchemaClass): Driver {
+  static toDomain(raw: DriverWithVirtuals): Driver {
     const driver = new Driver();
     driver.id = raw._id.toString();
     driver.firstName = raw.firstName;
@@ -17,6 +18,7 @@ export class DriverMapper {
     driver.carColor = raw.carColor;
     driver.carProductionDate = raw.carProductionDate;
     driver.isActive = raw.isActive;
+    driver.route = raw.routeId;
     driver.createdAt = raw.createdAt;
     driver.updatedAt = raw.updatedAt;
     return driver;

@@ -58,4 +58,8 @@ export class CreateDriverDto {
   @IsNumber()
   @IsNotEmpty()
   readonly licensePlateProvince: number;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly routeId: string;
 }

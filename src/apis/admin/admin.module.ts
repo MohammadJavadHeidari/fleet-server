@@ -8,8 +8,9 @@ import { AdminAuthGuard } from '@src/common/guards/admin-auth.guard';
 import { DriverModule } from './driver/driver.module';
 import { StationModule } from './station/station.module';
 import { RouteModule } from './route/route.module';
+import { EmployeeModule } from './employee/employee.module';
 @Module({
-  imports: [RouterModule.register([adminRoutes]), AuthModule, DriverModule, StationModule, RouteModule],
+  imports: [RouterModule.register([adminRoutes]), AuthModule, DriverModule, StationModule, RouteModule, EmployeeModule],
   providers: [
     {
       provide: APP_GUARD,

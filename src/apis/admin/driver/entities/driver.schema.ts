@@ -1,10 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as bcrypt from 'bcrypt';
-import { HydratedDocument, now } from 'mongoose';
+import mongoose, { HydratedDocument, now } from 'mongoose';
 // utils
 import { EntityDocumentHelper } from '@src/common/utils/document-entity-helper';
+import { Route } from '../../route/domain/route';
 
 export type DriverDocument = HydratedDocument<DriverSchemaClass>;
+
+export type DriverWithVirtuals = DriverSchemaClass & { routeId: Route };
+
 export const COLLECTION_DRIVERS = 'drivers';
 
 @Schema({
@@ -76,6 +79,13 @@ export class DriverSchemaClass extends EntityDocumentHelper {
     required: true,
   })
   licensePlateProvince: number;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'routes',
+    required: true,
+  })
+  routeId: mongoose.Types.ObjectId;
 
   @Prop({ default: true })
   isActive: boolean;

@@ -4,23 +4,28 @@ import { RouteSchemaClass } from './entities/route.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { RouteMapper } from './mappers/route.mapper';
-
+import { StationSchemaClass } from '../station/entities/station.schema';
 
 @Injectable()
 export class RouteService {
-  
   constructor(
-    @InjectModel(RouteSchemaClass.name)
-    private readonly routeModel: Model<RouteSchemaClass>,
+    @InjectModel(RouteSchemaClass.name) private readonly routeModel: Model<RouteSchemaClass>,
+    @InjectModel(StationSchemaClass.name) private readonly stationModel: Model<StationSchemaClass>,
   ) {}
 
   async getRoutes() {
-    const routes = await this.routeModel.find().lean();
+    const routes = await this.routeModel
+      .find()
+      .populate({
+        path: 'stations',
+        model: this.stationModel,
+      })
+      .lean();
 
     return {
       success: true,
       message: 'Routes fetched successfully',
-      results:{
+      results: {
         data: routes.map(RouteMapper.toDomain),
         total: routes.length,
       },
@@ -37,13 +42,12 @@ export class RouteService {
       throw new BadRequestException('Route with this title already exists');
     }
 
-   
+    const route = await this.routeModel.create({ ...createRoute });
 
     return {
       success: true,
       message: 'Route created successfully',
-      // results: RouteMapper.toDomain(),
+      results: RouteMapper.toDomain(route),
     };
   }
-
 }

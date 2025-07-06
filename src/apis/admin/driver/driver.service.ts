@@ -1,30 +1,33 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateDriverDto } from './dto/create-driver.dto';
-import { DriverSchemaClass } from './entities/driver.schema';
+import { DriverSchemaClass, DriverWithVirtuals } from './entities/driver.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { ClsService } from '@src/common/cls/cls.service';
 import { DriverMapper } from './mappers/driver.mapper';
+import { RouteSchemaClass } from '../route/entities/route.schema';
 
 @Injectable()
 export class DriverService {
-  
   constructor(
     @InjectModel(DriverSchemaClass.name)
     private readonly driverModel: Model<DriverSchemaClass>,
-    private readonly jwtService: JwtService,
-    private readonly cls: ClsService,
+    @InjectModel(RouteSchemaClass.name)
+    private readonly routeModel: Model<RouteSchemaClass>,
   ) {}
 
   async getDrivers() {
-    const drivers = await this.driverModel.find().lean();
+    const drivers = await this.driverModel.find().populate({
+      path: 'routeId',
+      model: this.routeModel,
+    });
 
     return {
       success: true,
       message: 'Drivers fetched successfully',
-      results: drivers.map(DriverMapper.toDomain),
+      results: {
+        data: drivers.map((driver) => DriverMapper.toDomain(driver as unknown as DriverWithVirtuals)),
+        total: drivers.length,
+      },
     };
   }
 
@@ -64,8 +67,7 @@ export class DriverService {
     return {
       success: true,
       message: 'Driver created successfully',
-      results: DriverMapper.toDomain(driver),
+      results: DriverMapper.toDomain(driver as unknown as DriverWithVirtuals),
     };
   }
-
 }

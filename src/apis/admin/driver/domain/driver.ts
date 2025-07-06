@@ -1,3 +1,5 @@
+import { Route } from "../../route/domain/route";
+
 export class Driver {
     id: string;
     firstName: string;
@@ -12,6 +14,7 @@ export class Driver {
     carColor: string;
     carProductionDate: number;
     isActive: boolean;
+    route: Route;
     createdAt: Date;
     updatedAt: Date;
 }

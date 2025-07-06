@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, now , Schema as MongooseSchema } from 'mongoose';
 // utils
 import { EntityDocumentHelper } from '@src/common/utils/document-entity-helper';
+import { Station } from '../../station/domain/station';
 
 export type RouteDocument = HydratedDocument<RouteSchemaClass>;
 
@@ -47,15 +48,15 @@ const RouteSchema = SchemaFactory.createForClass(RouteSchemaClass);
 
 // Add virtuals for easy access to starting and ending stations
 RouteSchema.virtual('startingStation').get(function () {
-  return this.stations[0];
+  return this.stations[0] as unknown as Station;
 });
 
 RouteSchema.virtual('endingStation').get(function () {
-  return this.stations[this.stations.length - 1];
+  return this.stations[this.stations.length - 1] as unknown as Station;
 });
 
 RouteSchema.virtual('pickupStops').get(function () {
-  return this.stations.slice(1, -1); // All stations except first and last
+  return this.stations.slice(1, -1) as unknown as Station[]; // All stations except first and last
 });
 
 RouteSchema.virtual('id').get(function () {
