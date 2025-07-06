@@ -1,10 +1,10 @@
 export class Station {
     id: string;
-    title: string;
+    name: string;
     address: string;
-    isEnable: boolean;
-    latitude: number;
-    longitude: number;
+    isActive: boolean;
+    lat: number;
+    lng: number;
     createdAt: Date;
     updatedAt: Date;
 }

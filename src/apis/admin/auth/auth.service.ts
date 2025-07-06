@@ -29,12 +29,12 @@ export class AuthService {
         throw new BadRequestException('User not found');
       }
 
-      const { password, ...userResponse } = existingUser;
+      const { email, firstName, lastName } = existingUser;
 
       return {
         success: true,
         message: 'User fetched successfully',
-        data: userResponse,
+        data: { email, firstName, lastName },
       };
     } catch (error) {
       return {

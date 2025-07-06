@@ -3,19 +3,19 @@ import { IsString, IsNotEmpty, IsOptional, IsISO8601, IsBoolean, IsNumber, IsLat
 export class CreateStationDto {
   @IsString()
   @IsNotEmpty()
-  readonly title: string;
+  readonly name: string;
 
   @IsString()
   @IsNotEmpty()
   readonly address: string;
 
   @IsLatitude()
-  readonly latitude: number;
+  readonly lat: number;
 
   @IsLongitude()
-  readonly longitude: number;
+  readonly lng: number;
 
   @IsString()
   @IsNotEmpty()
-  readonly isEnable: boolean;
+  readonly isActive: boolean;
 }

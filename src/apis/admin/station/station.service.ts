@@ -20,21 +20,32 @@ export class StationService {
     return {
       success: true,
       message: 'Stations fetched successfully',
-      results: stations.map(StationMapper.toDomain),
+      results:{
+        data: stations.map(StationMapper.toDomain),
+        total: stations.length,
+      },
     };
   }
 
   async create(createStation: CreateStationDto) {
     // Check if station already exists by title
     const existingStationByTitle = await this.stationModel.findOne({
-      title: createStation.title,
+      name: createStation.name,
     });
 
     if (existingStationByTitle) {
       throw new BadRequestException('Station with this title already exists');
     }
 
-    const station = await this.stationModel.create(createStation);
+    const { lng, lat, ...stationData } = createStation;
+
+    const station = await this.stationModel.create({
+      ...stationData,
+      location: {
+        type: 'Point',
+        coordinates: [lng, lat],
+      },
+    });
 
     return {
       success: true,

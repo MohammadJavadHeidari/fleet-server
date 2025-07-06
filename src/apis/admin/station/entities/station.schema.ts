@@ -25,7 +25,7 @@ export const COLLECTION_STATIONS = 'stations';
 })
 export class StationSchemaClass extends EntityDocumentHelper {
   @Prop(String)
-  title: string;
+  name: string;
 
   @Prop(String)
   address: string;
@@ -48,7 +48,7 @@ export class StationSchemaClass extends EntityDocumentHelper {
   location: GeoPoint;
 
   @Prop({ default: true })
-  isEnable: boolean;
+  isActive: boolean;
 
   @Prop({ default: now })
   createdAt: Date;

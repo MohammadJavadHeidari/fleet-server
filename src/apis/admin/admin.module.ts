@@ -6,8 +6,10 @@ import { adminRoutes } from '@src/apis/admin/admin.routes';
 import { AuthModule } from '@src/apis/admin/auth/auth.module';
 import { AdminAuthGuard } from '@src/common/guards/admin-auth.guard';
 import { DriverModule } from './driver/driver.module';
+import { StationModule } from './station/station.module';
+import { RouteModule } from './route/route.module';
 @Module({
-  imports: [RouterModule.register([adminRoutes]), AuthModule, DriverModule],
+  imports: [RouterModule.register([adminRoutes]), AuthModule, DriverModule, StationModule, RouteModule],
   providers: [
     {
       provide: APP_GUARD,
