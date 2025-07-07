@@ -5,12 +5,11 @@ import { DriverAuthGuard } from '@src/common/guards/driver-auth.guard';
 import { driverRoutes } from '@src/apis/driver/driver.routes';
 // modules
 import { AuthModule } from '@src/apis/driver/auth/auth.module';
+import { LocationModule } from './location/location.module';
+import { RouteModule } from './route/route.module';
 
 @Module({
-  imports: [
-    RouterModule.register([driverRoutes]),
-     AuthModule,
-    ],
+  imports: [RouterModule.register([driverRoutes]), AuthModule, LocationModule, RouteModule],
   providers: [
     {
       provide: APP_GUARD,

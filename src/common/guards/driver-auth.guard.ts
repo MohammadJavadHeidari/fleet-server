@@ -37,12 +37,12 @@ export class DriverAuthGuard implements CanActivate {
       }
 
       try {
-        const payload = await this.jwtService.verifyAsync<{ userId: string; phoneNumber: string }>(token, {
+        const payload = await this.jwtService.verifyAsync<{ driverId: string; phoneNumber: string }>(token, {
           secret: process.env.JWT_TOKEN_SECRET,
         });
 
         this.cls.set('driver', {
-          id: payload.userId,
+          id: payload.driverId,
           phoneNumber: payload.phoneNumber,
         });
       } catch (error) {
