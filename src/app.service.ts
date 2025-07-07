@@ -26,7 +26,11 @@ export class AppService {
   // constructor(private readonly appConfigService: AppConfigService) {}
 
   setCors(app: INestApplication): void {
-    app.enableCors();
+    app.enableCors({
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+    });
   }
 
   setHelmet(app: INestApplication): void {
@@ -125,7 +129,7 @@ export class AppService {
   // }
 
   async startingServer(app: INestApplication): Promise<void> {
-    await app.listen(3000);
+    await app.listen(process.env.PORT || 3000, '0.0.0.0');
 
     console.info(`server listening on ${await app.getUrl()}`);
   }
