@@ -64,6 +64,8 @@ export class AuthService {
 
       this.otps.set(employee.phoneNumber, { code, expires: Date.now() + 5 * 60 * 1000 });
 
+      console.log(`OTP code ${code} sent to employee with phone number: ${employee.phoneNumber}`);
+
       return {
         success: true,
         message: 'code has been sent to employee',
@@ -99,6 +101,8 @@ export class AuthService {
       const payload = { employeeId: _id, phoneNumber: phoneNumber };
 
       const accessToken = await this.jwtService.signAsync(payload);
+
+      console.log('Employee signed in successfully with phone number: ', phoneNumber);
 
       return {
         success: true,

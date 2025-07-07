@@ -37,12 +37,12 @@ export class EmployeeAuthGuard implements CanActivate {
       }
 
       try {
-        const payload = await this.jwtService.verifyAsync<{ userId: string; phoneNumber: string }>(token, {
+        const payload = await this.jwtService.verifyAsync<{ employeeId: string; phoneNumber: string }>(token, {
           secret: process.env.JWT_TOKEN_SECRET,
         });
 
         this.cls.set('employee', {
-          id: payload.userId,
+          id: payload.employeeId,
           phoneNumber: payload.phoneNumber,
         });
       } catch (error) {
