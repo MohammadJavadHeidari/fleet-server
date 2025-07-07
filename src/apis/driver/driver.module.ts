@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD, RouterModule } from '@nestjs/core';
-import { AdminAuthGuard } from '@src/common/guards/admin-auth.guard';
+import { DriverAuthGuard } from '@src/common/guards/driver-auth.guard';
 // routes
-import { adminRoutes } from '@src/apis/admin/admin.routes';
+import { driverRoutes } from '@src/apis/driver/driver.routes';
 // modules
-import { AuthModule } from '@src/apis/admin/auth/auth.module';
-import { DriverModule } from '@src/apis/admin/driver/driver.module';
+import { AuthModule } from '@src/apis/driver/auth/auth.module';
 
 @Module({
-  imports: [RouterModule.register([adminRoutes]), AuthModule, DriverModule],
+  imports: [
+    RouterModule.register([driverRoutes]),
+     AuthModule,
+    ],
   providers: [
     {
       provide: APP_GUARD,
-      useClass: AdminAuthGuard,
+      useClass: DriverAuthGuard,
     },
   ],
 })
-export class AdminModule {}
+export class DriverModule {}

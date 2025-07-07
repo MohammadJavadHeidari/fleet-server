@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { MongooseModule } from '@nestjs/mongoose';
-// schemas
-import { DriverSchema , DriverSchemaClass } from '@src/apis/admin/driver/entities/driver.schema';
-// services
 import { AuthService } from './auth.service';
-// controllers
 import { AuthController } from './auth.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema, UserSchemaClass } from './entities/user.schema';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: DriverSchemaClass.name, schema: DriverSchema }]),
+    MongooseModule.forFeature([{ name: UserSchemaClass.name, schema: UserSchema }]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_TOKEN_SECRET,

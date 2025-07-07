@@ -1,6 +1,6 @@
-import { Station } from "../../station/domain/station";
+import { Station } from "@src/apis/admin/station/domain/station";
 
-    export class Employee {
+export class Employee {
     id: string;
     firstName: string;
     lastName: string;

@@ -1,9 +1,9 @@
 import { RouteTree } from '@nestjs/core';
 // modules
-import { AuthModule } from '@src/apis/driver/auth/auth.module';
+import { AuthModule } from '@src/apis/employee/auth/auth.module';
 
-export const driverRoutes: RouteTree = {
-  path: 'driver',
+export const employeeRoutes: RouteTree = {
+  path: 'employee',
   children: [
     {
       path: 'auth',

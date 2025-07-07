@@ -7,8 +7,8 @@ import { IS_PUBLIC_ROUTE_KEY } from '@src/common/decorators/public.decorator';
 import { ClsService } from '../cls/cls.service';
 
 @Injectable()
-export class AdminAuthGuard implements CanActivate {
-  private readonly UNAUTHENTICATED_MESSAGE = 'User is currently unauthorized, kindly authenticate to continue.';
+export class DriverAuthGuard implements CanActivate {
+  private readonly UNAUTHENTICATED_MESSAGE = 'Driver is currently unauthorized, kindly authenticate to continue.';
 
   constructor(
     private reflector: Reflector,
@@ -37,13 +37,13 @@ export class AdminAuthGuard implements CanActivate {
       }
 
       try {
-        const payload = await this.jwtService.verifyAsync<{ userId: string; email: string }>(token, {
+        const payload = await this.jwtService.verifyAsync<{ userId: string; phoneNumber: string }>(token, {
           secret: process.env.JWT_TOKEN_SECRET,
         });
 
-        this.cls.set('admin', {
+        this.cls.set('driver', {
           id: payload.userId,
-          email: payload.email,
+          phoneNumber: payload.phoneNumber,
         });
       } catch (error) {
         throw new UnauthorizedException(error.message);
