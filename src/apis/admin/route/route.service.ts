@@ -47,7 +47,6 @@ export class RouteService {
     return {
       success: true,
       message: 'Route created successfully',
-      results: RouteMapper.toDomain(route),
     };
   }
 }

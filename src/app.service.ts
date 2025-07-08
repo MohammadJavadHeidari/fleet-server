@@ -2,6 +2,7 @@ import {
   ClassSerializerInterceptor,
   INestApplication,
   Injectable,
+  BadRequestException,
   RequestMethod,
   ValidationError,
   ValidationPipe,
@@ -50,17 +51,14 @@ export class AppService {
   //     console.log(errors);
 
   //     const messages = errors.flatMap((error) => {
-  //       let errorMessage = error.constraints ?
-  //         Object.values(error.constraints || {}) :
-  //         error.children.flatMap((error) => Object.values(error.constraints || {}));
+  //       let errorMessage = error.constraints
+  //         ? Object.values(error.constraints || {})
+  //         : error.children?.flatMap((error) => Object.values(error.constraints || {}));
 
-  //       return errorMessage
+  //       return errorMessage;
   //     });
 
-  //     throw new HttpBadRequestException({
-  //       errorCode: ERROR_CODE.CODE003,
-  //       message: messages[0],
-  //     });
+  //     throw new BadRequestException(messages[0]);
   //   };
 
   //   app.useGlobalPipes(

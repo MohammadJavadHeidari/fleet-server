@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, now , Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, now, Schema as MongooseSchema } from 'mongoose';
 // utils
 import { EntityDocumentHelper } from '@src/common/utils/document-entity-helper';
 import { Station } from '../../station/domain/station';
@@ -21,7 +21,6 @@ export const COLLECTION_ROUTES = 'routes';
 export class RouteSchemaClass extends EntityDocumentHelper {
   @Prop({
     type: String,
-    required: true,
   })
   name: string;
 
